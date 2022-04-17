@@ -1,18 +1,24 @@
 package com.asuka.cache.cache.api;
 
 import com.asuka.cache.cache.manager.DataManager;
-import com.asuka.cache.cache.manager.TimeManager;
-import com.asuka.cache.cache.store.BasicDataStore;
+import com.asuka.cache.cache.manager.LRUManager;
 
-public class AsukaCache {
-    private DataManager dataManager;
+public class AsukaCache<K,V> {
+    private DataManager<K,V> dataManager;
 
-    AsukaCache(DataManager dataManager){
+    private AsukaCache(DataManager<K,V> dataManager){
         this.dataManager = dataManager;
     }
 
-    public static <K, V> AsukaCache getCache(Class<K> keyClass, Class<V> valueClass){
-        DataManager<K,V> dataManager = new TimeManager<>();
-        return new AsukaCache(dataManager);
+    public V get(K key){
+        return dataManager.get(key);
+    }
+    public void set(K key, V value){
+        dataManager.add(key, value);
+    }
+
+    public static <K, V> AsukaCache<K,V> getCache(Integer size){
+        DataManager<K,V> dataManager = new LRUManager<>(size);
+        return new AsukaCache<>(dataManager);
     }
 }
