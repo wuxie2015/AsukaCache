@@ -2,10 +2,7 @@ package com.asuka.cache.cache.manager;
 
 import com.asuka.cache.cache.store.BasicDataStore;
 import com.asuka.cache.cache.store.DataStore;
-import com.asuka.cache.common.tuple.Tuple2;
-
 import java.util.LinkedList;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LRUManager<K,V> extends DataManagerAbstract<K, V> {
 
